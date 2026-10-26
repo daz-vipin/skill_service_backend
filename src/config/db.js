@@ -12,17 +12,18 @@ serverSelectionTimeoutMS: 10000,
 
 console.log(`MongoDB connected: ${mongoose.connection.host}`);
 
+
 } catch (err) {
 console.error('MongoDB connection error name:', err.name);
 console.error('MongoDB connection error message:', err.message);
 
-```
+
 if (err.reason) {
   console.error('MongoDB connection error details:', err.reason);
 }
 
 throw err;
-```
+
 
 }
 }
