@@ -36,5 +36,15 @@ app.use((err, _req, res, _next) => {
 });
 
 const port = Number(process.env.PORT) || 3000;
-connectDB().then(() => app.listen(port, () => console.log(`Skill & Service API listening on port ${port}`)))
-  .catch(err => { console.error('Startup failed:', err.message); process.exit(1); });
+
+connectDB()
+.then(() => {
+app.listen(port, () => {
+console.log(`Skill & Service API listening on port ${port}`);
+});
+})
+.catch(err => {
+console.error('Startup failed:', err);
+process.exit(1);
+});
+
