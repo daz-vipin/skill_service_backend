@@ -54,8 +54,13 @@ console.error('MongoDB connection error name:', err.name);
 console.error('MongoDB connection error message:', err.message);
 
 
-if (err.reason) {
-  console.error('MongoDB connection error details:', err.reason);
+if (err.reason && err.reason.servers) {
+  for (const [address, server] of err.reason.servers) {
+    console.error('Atlas server:', address);
+    console.error('Server error name:', server.error?.name);
+    console.error('Server error message:', server.error?.message);
+    console.error('Server error cause:', server.error?.cause);
+  }
 }
 
 throw err;
