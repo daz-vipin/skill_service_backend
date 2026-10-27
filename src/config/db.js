@@ -1,4 +1,31 @@
 const mongoose = require('mongoose');
+const net = require('net');
+
+const atlasHosts = [
+  'ac-zgif4tm-shard-00-00.1jzmnkh.mongodb.net',
+  'ac-zgif4tm-shard-00-01.1jzmnkh.mongodb.net',
+  'ac-zgif4tm-shard-00-02.1jzmnkh.mongodb.net',
+];
+
+for (const host of atlasHosts) {
+  const socket = net.createConnection({ host, port: 27017 });
+
+  socket.setTimeout(5000);
+
+  socket.on('connect', () => {
+    console.log(`ATLAS TCP SUCCESS: ${host}:27017`);
+    socket.destroy();
+  });
+
+  socket.on('timeout', () => {
+    console.error(`ATLAS TCP TIMEOUT: ${host}:27017`);
+    socket.destroy();
+  });
+
+  socket.on('error', (err) => {
+    console.error(`ATLAS TCP FAILED: ${host}: ${err.code || err.message}`);
+  });
+}
 const dns = require('dns');
 
 dns.resolveSrv('_mongodb._tcp.1jzmnkh.mongodb.net', (err, records) => {
