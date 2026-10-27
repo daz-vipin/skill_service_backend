@@ -50,11 +50,11 @@ dns.resolveSrv(
 
 // Connect to MongoDB Atlas
 async function connectDB() {
-  if (!process.env.MONGODB_URI) {
-    throw new Error(
-      'MONGODB_URI is missing in environment variables'
-    );
-  }
+  
+if (!process.env.MONGODB_URI) {
+  throw new Error('MONGODB_URI is missing in environment variables');
+}
+
 
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
