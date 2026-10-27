@@ -10,7 +10,7 @@ const atlasHosts = [
   'ac-zgif4tm-shard-00-02.1jzmnkh.mongodb.net',
 ];
 
-// Diagnostic: Check TCP connectivity to Atlas
+// Diagnostic: Check TCP connectivity
 for (const host of atlasHosts) {
   const socket = net.createConnection({
     host,
@@ -36,7 +36,7 @@ for (const host of atlasHosts) {
   });
 }
 
-// Diagnostic: Check MongoDB Atlas SRV DNS records
+// Diagnostic: Check Atlas DNS records
 dns.resolveSrv(
   '_mongodb._tcp.1jzmnkh.mongodb.net',
   (err, records) => {
@@ -48,12 +48,10 @@ dns.resolveSrv(
   }
 );
 
-// Connect to MongoDB
+// Connect to MongoDB Atlas
 async function connectDB() {
   if (!process.env.MONGODB_URI) {
-    throw new Error(
-      'MONGODB_URI is missing in environment variables'
-    );
+    throw new Error('MONGODB_URI is missing in environment variables');
   }
 
   try {
@@ -65,39 +63,18 @@ async function connectDB() {
       `MongoDB connected: ${mongoose.connection.host}`
     );
   } catch (err) {
-    console.error(
-      'MongoDB connection error name:',
-      err.name
-    );
+    console.error('MongoDB connection error name:', err.name);
+    console.error('MongoDB connection error message:', err.message);
 
-    console.error(
-      'MongoDB connection error message:',
-      err.message
-    );
-
-    // Log detailed errors for individual Atlas servers
     if (err.reason && err.reason.servers) {
       for (const [address, server] of err.reason.servers) {
         console.error('Atlas server:', address);
-
-        console.error(
-          'Server error name:',
-          server.error?.name
-        );
-
-        console.error(
-          'Server error message:',
-          server.error?.message
-        );
-
-        console.error(
-          'Server error cause:',
-          server.error?.cause
-        );
+        console.error('Server error name:', server.error?.name);
+        console.error('Server error message:', server.error?.message);
+        console.error('Server error cause:', server.error?.cause);
       }
     }
 
-    // Pass the error to the application startup handler
     throw err;
   }
 }
