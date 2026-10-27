@@ -1,9 +1,14 @@
 {
   "name": "skill-service-backend",
   "version": "1.0.0",
+  "test:tls": "node src/test-tls.js",
   "description": "Skill & Service API - Express, MongoDB, JWT and Gemini 3.8 Flash",
   "main": "src/server.js",
-  "scripts": {"start": "node src/server.js", "dev": "nodemon src/server.js"},
+  "scripts": {
+  "start": "node src/server.js",
+  "dev": "nodemon src/server.js",
+  "test:tls": "node src/test-tls.js"
+},
   "engines": {"node": ">=20"},
   "dependencies": {
     "@google/genai": "^1.30.0",
