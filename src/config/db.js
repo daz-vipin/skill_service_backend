@@ -51,7 +51,9 @@ dns.resolveSrv(
 // Connect to MongoDB Atlas
 async function connectDB() {
   if (!process.env.MONGODB_URI) {
-    throw new Error('MONGODB_URI is missing in environment variables');
+    throw new Error(
+      'MONGODB_URI is missing in environment variables'
+    );
   }
 
   try {
