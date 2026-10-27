@@ -1,4 +1,13 @@
 const mongoose = require('mongoose');
+const dns = require('dns');
+
+dns.resolveSrv('_mongodb._tcp.1jzmnkh.mongodb.net', (err, records) => {
+  if (err) {
+    console.error('ATLAS DNS TEST FAILED:', err.message);
+  } else {
+    console.log('ATLAS DNS TEST SUCCESS:', records);
+  }
+});
 
 async function connectDB() {
 if (!process.env.MONGODB_URI) {
