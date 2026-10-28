@@ -38,9 +38,26 @@ const hiringSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ['pending', 'accepted', 'rejected', 'completed'],
+      enum: [
+        'pending',
+        'accepted',
+        'rejected',
+        'in_progress',
+        'submitted',
+        'completed'
+      ],
       default: 'pending',
       index: true
+    },
+
+    completedAt: {
+      type: Date,
+      default: null
+    },
+
+    submittedAt: {
+      type: Date,
+      default: null
     }
   },
   { timestamps: true }
