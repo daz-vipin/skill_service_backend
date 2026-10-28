@@ -1,11 +1,11 @@
 
 const express = require('express');
 const User = require('../models/User');
-const { requireAuth } = require('../middleware/auth');
+
 
 const router = express.Router();
 
-router.get('/', requireAuth, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const {
       q = '',
@@ -23,8 +23,7 @@ router.get('/', requireAuth, async (req, res, next) => {
 
     const filter = {
       role: 'worker',
-      isActive: true,
-      _id: { $ne: req.user._id }
+      isActive: true
     };
 
     if (category && category.toLowerCase() !== 'all') {
@@ -90,7 +89,7 @@ router.get('/', requireAuth, async (req, res, next) => {
     const [workers, total] = await Promise.all([
       User.find(filter)
         .select(
-          'name email role headline skills bio hourlyRate city createdAt completedProjects rank'
+          'name role headline skills bio hourlyRate city createdAt completedProjects rank'
         )
         .sort({ createdAt: -1 })
         .skip((safePage - 1) * safeLimit)
