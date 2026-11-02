@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
@@ -32,16 +31,45 @@ const userSchema = new mongoose.Schema(
       index: true
     },
 
+    // Worker type: digital or local
+    serviceType: {
+      type: String,
+      enum: ['digital', 'local', ''],
+      default: ''
+    },
+
+    // Worker's selected skills
+    skills: {
+      type: [String],
+      default: []
+    },
+
+    // Digital workers: north_india or south_india
+    region: {
+      type: String,
+      enum: ['north_india', 'south_india', ''],
+      default: ''
+    },
+
+    // Worker's city
+    city: {
+      type: String,
+      trim: true,
+      maxlength: 100,
+      default: ''
+    },
+
+    // Local workers: manually entered service areas
+    serviceAreas: {
+      type: [String],
+      default: []
+    },
+
     headline: {
       type: String,
       trim: true,
       maxlength: 120,
       default: ''
-    },
-
-    skills: {
-      type: [String],
-      default: []
     },
 
     bio: {
@@ -51,17 +79,12 @@ const userSchema = new mongoose.Schema(
       default: ''
     },
 
+    // Retained temporarily for compatibility with existing features.
+    // It will not be required or used in the new signup flow.
     hourlyRate: {
       type: Number,
       min: 0,
       default: 0
-    },
-
-    city: {
-      type: String,
-      trim: true,
-      maxlength: 100,
-      default: ''
     },
 
     isActive: {
